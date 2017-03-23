@@ -81,7 +81,6 @@ def main(config_path, persist_path, debug=False):
         for action in feed.actions:
             message = feed.format_action(action)
             discord_hook.send_message(message)
-            break
         last_update = feed.last_update
     finally:
         with persistence.persistent_storage(persist_path) as storage:

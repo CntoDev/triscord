@@ -210,7 +210,6 @@ def test_action_formatting(api_config, api_action):  # pylint: disable=W0621
         board_id=api_config['board_id'],
     )
     for action in feed.actions:
-        print("got action: ", action['type'])
         message = feed.format_action(action)
         assert any(message)
 
