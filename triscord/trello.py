@@ -135,7 +135,7 @@ def card_import_formatter(action):
 def member_join_formatter(action):
     """Formatter for the `addMemberToCard` action."""
 
-    return "`{display[entities][memberCreator][username]}` joined card " \
+    return "`{member[username]}` joined card " \
            "`{display[entities][card][text]}`.".format(**action)
 
 
@@ -143,7 +143,7 @@ def member_join_formatter(action):
 def member_leave_formatter(action):
     """Formatter for the `removeMemberFromCard` action."""
 
-    return "`{display[entities][memberCreator][username]}` left card " \
+    return "`{member[username]}` left card " \
            "`{display[entities][card][text]}`.".format(**action)
 
 

@@ -1,0 +1,117 @@
+[
+   {
+      "data" : {
+         "board" : {
+            "name" : "R&D",
+            "id" : "58ac7cf78180d6bd687bed33",
+            "shortLink" : "Dvoh1A9x"
+         },
+         "deactivated" : false,
+         "idMember" : "58adf7a94644453695725f01",
+         "card" : {
+            "id" : "58d13e0eed7b10431a67eada",
+            "shortLink" : "lPw1EUlm",
+            "idShort" : 36,
+            "name" : "OCAP - Add support for Isla Duala"
+         }
+      },
+      "member" : {
+         "avatarHash" : "e5529154706d0f6b39a68aafefae911c",
+         "username" : "ivansakic1",
+         "initials" : "IŠ",
+         "id" : "58adf7a94644453695725f01",
+         "fullName" : "Ivan Šakić"
+      },
+      "id" : "58d4051f0af5c01d830f8228",
+      "type" : "removeMemberFromCard",
+      "idMemberCreator" : "50aea4625c2569f63a01668a",
+      "memberCreator" : {
+         "fullName" : "Mickaël Falck",
+         "username" : "lastmikoi",
+         "avatarHash" : "6b67b8b70cf8dba2f08cd9f134144a01",
+         "initials" : "MF",
+         "id" : "50aea4625c2569f63a01668a"
+      },
+      "display" : {
+         "entities" : {
+            "member" : {
+               "text" : "Ivan Šakić",
+               "username" : "ivansakic1",
+               "type" : "member",
+               "id" : "58adf7a94644453695725f01"
+            },
+            "card" : {
+               "id" : "58d13e0eed7b10431a67eada",
+               "shortLink" : "lPw1EUlm",
+               "type" : "card",
+               "text" : "OCAP - Add support for Isla Duala"
+            },
+            "memberCreator" : {
+               "id" : "50aea4625c2569f63a01668a",
+               "username" : "lastmikoi",
+               "text" : "Mickaël Falck",
+               "type" : "member"
+            }
+         },
+         "translationKey" : "action_removed_member_from_card"
+      },
+      "date" : "2017-03-23T17:25:51.313Z"
+   },
+   {
+      "date" : "2017-03-23T17:12:42.215Z",
+      "memberCreator" : {
+         "id" : "50aea4625c2569f63a01668a",
+         "username" : "lastmikoi",
+         "initials" : "MF",
+         "avatarHash" : "6b67b8b70cf8dba2f08cd9f134144a01",
+         "fullName" : "Mickaël Falck"
+      },
+      "idMemberCreator" : "50aea4625c2569f63a01668a",
+      "display" : {
+         "translationKey" : "action_added_member_to_card",
+         "entities" : {
+            "card" : {
+               "type" : "card",
+               "text" : "OCAP - Add support for Isla Abramia",
+               "shortLink" : "BGpMyaSp",
+               "id" : "58d13e31767006fd5c556942"
+            },
+            "memberCreator" : {
+               "id" : "50aea4625c2569f63a01668a",
+               "text" : "Mickaël Falck",
+               "type" : "member",
+               "username" : "lastmikoi"
+            },
+            "member" : {
+               "id" : "58adf7a94644453695725f01",
+               "type" : "member",
+               "text" : "Ivan Šakić",
+               "username" : "ivansakic1"
+            }
+         }
+      },
+      "type" : "addMemberToCard",
+      "data" : {
+         "board" : {
+            "name" : "R&D",
+            "shortLink" : "Dvoh1A9x",
+            "id" : "58ac7cf78180d6bd687bed33"
+         },
+         "idMember" : "58adf7a94644453695725f01",
+         "card" : {
+            "idShort" : 37,
+            "name" : "OCAP - Add support for Isla Abramia",
+            "id" : "58d13e31767006fd5c556942",
+            "shortLink" : "BGpMyaSp"
+         }
+      },
+      "member" : {
+         "fullName" : "Ivan Šakić",
+         "username" : "ivansakic1",
+         "initials" : "IŠ",
+         "avatarHash" : "e5529154706d0f6b39a68aafefae911c",
+         "id" : "58adf7a94644453695725f01"
+      },
+      "id" : "58d4020aa017287f1030ebfb"
+   }
+]

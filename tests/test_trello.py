@@ -19,6 +19,12 @@ def _load_from_json(file_name):
         return json.load(json_file)
 
 
+def _filter_action_type(actions, type_whitelist):
+    for action in actions:
+        if action['type'] in type_whitelist:
+            yield action
+
+
 @pytest.fixture(scope="module")
 def api_config():
     """Returns basic Trello API configuration."""
@@ -212,6 +218,62 @@ def test_action_formatting(api_config, api_action):  # pylint: disable=W0621
     for action in feed.actions:
         message = feed.format_action(action)
         assert any(message)
+
+
+@pytest.mark.parametrize(
+    'action',
+    _filter_action_type(
+        _load_from_json('trello_api_action_card_assigned.json'),
+        ['addMemberToCard'],
+    ),
+)
+def test_action_cardjoin(api_config, action):  # pylint: disable=W0621
+    """Regression test.
+
+    Asserts that `addMemberToCard` action formatting outputs the actual added member.
+    The bug was that we were using the action instigator rather than the assigned member.
+    """
+
+    api = unit.TrelloAPI(
+        key=api_config['key'],
+        token=api_config['token'],
+        base_url=api_config['url'],
+    )
+    feed = unit.TrelloActivityFeed(
+        api=api,
+        board_id=api_config['board_id'],
+    )
+    assigned_member = action['member']['username']
+    message = feed.format_action(action)
+    assert assigned_member in message
+
+
+@pytest.mark.parametrize(
+    'action',
+    _filter_action_type(
+        _load_from_json('trello_api_action_card_assigned.json'),
+        ['removeMemberFromCard'],
+    ),
+)
+def test_action_cardleave(api_config, action):  # pylint: disable=W0621
+    """Regression test.
+
+    Asserts that `removeMemberToCard` action formatting outputs the actual removed member.
+    The bug was that we were using the action instigator rather than the unassigned member.
+    """
+
+    api = unit.TrelloAPI(
+        key=api_config['key'],
+        token=api_config['token'],
+        base_url=api_config['url'],
+    )
+    feed = unit.TrelloActivityFeed(
+        api=api,
+        board_id=api_config['board_id'],
+    )
+    assigned_member = action['member']['username']
+    message = feed.format_action(action)
+    assert assigned_member in message
 
 
 #  vim: set tabstop=4 shiftwidth=4 expandtab autoindent :
