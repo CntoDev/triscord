@@ -1,0 +1,13 @@
+.*.sw*
+.venv
+last_update
+__pycache__/
+.eggs/
+dist/
+build/
+*.egg-info/
+.ropeproject
+.coverage
+.cache/
+triscord.ini
+*.pickle3
