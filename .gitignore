@@ -9,5 +9,5 @@ build/
 .ropeproject
 .coverage
 .cache/
-triscord.ini
+./triscord.ini
 *.pickle3
