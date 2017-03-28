@@ -7,6 +7,7 @@ import os
 import re
 import unittest.mock
 
+import arrow
 import pytest
 import requests
 
@@ -274,6 +275,35 @@ def test_action_cardleave(api_config, action):  # pylint: disable=W0621
     assigned_member = action['member']['username']
     message = feed.format_action(action)
     assert assigned_member in message
+
+
+def test_actions_ordering(api_config, api_actions):  # pylint: disable=W0621
+    """Regression test.
+
+    Asserts that TrelloActivityFeed ouputs actions in a chronological order.
+    The bug was that actions were displayed using Trello's API original order,
+    which is reversed chronologically.
+    """
+
+    _ = api_actions
+
+    api = unit.TrelloAPI(
+        key=api_config['key'],
+        token=api_config['token'],
+        base_url=api_config['url'],
+    )
+
+    feed = unit.TrelloActivityFeed(
+        api=api,
+        board_id=api_config['board_id'],
+    )
+
+    previous_action_date = None
+    for action in feed.actions:
+        action_date = arrow.get(action['date'])
+        if previous_action_date is not None:
+            assert action_date > previous_action_date
+        previous_action_date = action_date
 
 
 #  vim: set tabstop=4 shiftwidth=4 expandtab autoindent :

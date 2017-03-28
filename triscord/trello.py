@@ -99,6 +99,11 @@ class TrelloActivityFeed(object):
             params=params,
         )
         self.last_update = arrow.now()
+
+        # Reverse actions order to sort them chronologically
+        actions = response.json()
+        actions.reverse()
+
         for action in response.json():
             if action['type'] == 'updateCard':
                 for field_name in self.muted_update_fields:
