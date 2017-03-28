@@ -1,6 +1,19 @@
 Carpe Noctem Tactical Operations Trello to Discord integration script
 =====================================================================
 
+.. image:: https://travis-ci.org/CntoDev/triscord.svg?branch=master
+    :target: https://travis-ci.org/CntoDev/triscord
+    :alt: Build Status
+.. image:: https://api.codacy.com/project/badge/Grade/bd599432409a4bac94dbe40c00c3a078
+    :target: https://www.codacy.com/app/CNTODev/triscord?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CntoDev/triscord&amp;utm_campaign=Badge_Grade
+    :alt: Codacy Grade
+.. image:: https://api.codacy.com/project/badge/Coverage/bd599432409a4bac94dbe40c00c3a078
+    :target: https://www.codacy.com/app/CNTODev/triscord?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CntoDev/triscord&amp;utm_campaign=Badge_Coverage
+    :alt: Codacy Coverage
+.. image:: https://requires.io/github/CntoDev/triscord/requirements.svg?branch=master
+    :target: https://requires.io/github/CntoDev/triscord/requirements/?branch=master
+    :alt: Requirements Status
+
 Triscord is an utility script used by the Carpe Noctem Tacical Operations
 community (http://carpenoctem.co) to provide a curated activity feed from
 a given Trello board to a given Discord channel, using the Trello API in
