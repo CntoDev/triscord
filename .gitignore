@@ -8,6 +8,7 @@ build/
 *.egg-info/
 .ropeproject
 .coverage
+coverage.xml
 .cache/
-./triscord.ini
+/triscord.ini
 *.pickle3
