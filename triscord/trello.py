@@ -104,7 +104,7 @@ class TrelloActivityFeed(object):
         actions = response.json()
         actions.reverse()
 
-        for action in response.json():
+        for action in actions:
             if action['type'] == 'updateCard':
                 for field_name in self.muted_update_fields:
                     action['data']['old'].pop(field_name, None)
