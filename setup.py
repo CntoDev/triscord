@@ -43,14 +43,7 @@ setup(
             'ipython>=5.3,<6',
         ],
         'test': [
-            'pytest>=3.0,<4',
-            'coverage>=4.3,<5',
-            'pytest-cov>=2.4,<3',
-            'pep8>=1.7,<2',
-            'pytest-pep8>=1.0,<2',
-            'pylint>=1.6,<2',
-            'pytest-pylint>=0.7',
-            'pytest-mock>=1.5,<2',
+            'tox>=2.7,<3'
         ],
     },
     entry_points={
