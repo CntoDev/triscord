@@ -87,8 +87,7 @@ def api_actions(mocker):
             inner = unittest.mock.Mock()
             inner.json = unittest.mock.Mock(return_value=activity)
             return inner
-        else:  # pragma: no cover
-            return original_get(endpoint, *args, **kwargs)
+        return original_get(endpoint, *args, **kwargs)  # pragma: no cover
 
     mocker.patch('triscord.trello.TrelloAPI.get', side_effect=side_effect)
 
