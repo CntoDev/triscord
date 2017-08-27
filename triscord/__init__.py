@@ -7,6 +7,7 @@ import argparse
 import logging
 
 import arrow
+import requests
 
 from . import discord
 from . import persistence
@@ -78,7 +79,12 @@ def main(config_path, persist_path, debug=False):
             ),
         )
 
-        for action in feed.actions:
+        try:
+            feed_actions = list(feed.actions)
+        except (requests.exceptions.HTTPError, requests.exceptions.ConnectionError) as exc:
+            logging.error(exc)
+            return
+        for action in feed_actions:
             message = feed.format_action(action)
             discord_hook.send_message(message)
         last_update = feed.last_update
