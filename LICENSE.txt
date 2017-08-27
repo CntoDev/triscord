@@ -1,4 +1,8 @@
-Copyright 2017 Carpe Noctem - Tactical Operations (carpenoctem.co)
+Copyright 2017 Carpe Noctem - Tactical Operations (aka. CNTO) (contact@carpenoctem.co) and the triscord contributors
+
+A listing of this software's contributors can be found in the
+AUTHORS file at the root of this software's source code tree
+or at <https://raw.githubusercontent.com/CntoDev/triscord/master/AUTHORS>.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
