@@ -50,7 +50,7 @@ class DiscordWebhook(object):  # pylint: disable=R0903
                 },
             )
             if response.status_code == 429:
-                request_delay = int(response.headers['Retry-After'])
+                request_delay = int(response.headers['Retry-After']) / 1000
                 logging.debug(
                     'DiscordWebhook.send_message(%s):Rate limited, retrying in %ds',
                     message,

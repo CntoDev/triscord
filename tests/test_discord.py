@@ -83,7 +83,7 @@ def _side_effects_gen(side_effects):
         yield func(*arg, **kwargs)
 
 
-def _generate_response(mocker, remaining=3, retry_after=1):
+def _generate_response(mocker, remaining=3, retry_after=1000):
     """Mocks a requests.Response to contain Discord ratelimit headers"""
 
     response = mocker.Mock()
@@ -94,7 +94,9 @@ def _generate_response(mocker, remaining=3, retry_after=1):
     response.status_code = 200
 
     response.headers['X-RateLimit-Limit'] = 5
-    response.headers['X-RateLimit-Reset'] = arrow.now().shift(seconds=retry_after).timestamp
+    response.headers['X-RateLimit-Reset'] = arrow.now().shift(
+        seconds=retry_after / 1000,
+    ).timestamp
 
     if remaining == 0:
         response.headers['X-RateLimit-Remaining'] = 0
@@ -129,7 +131,7 @@ class _DelayViolation(Exception):
     pass
 
 
-def _generate_delaylimited_response(mocker, retry_after=3, reinitialize=False):
+def _generate_delaylimited_response(mocker, retry_after=3000, reinitialize=False):
     """Mocks a requests.Response to raise an error if called too early."""
 
     now = arrow.now().timestamp
@@ -140,7 +142,9 @@ def _generate_delaylimited_response(mocker, retry_after=3, reinitialize=False):
         raise _DelayViolation("Called at %s, next_allowed was %s" % (now, next_allowed))
     response = _generate_response(mocker, remaining=0, retry_after=retry_after)
 
-    _generate_delaylimited_response.next_allowed = arrow.now().shift(seconds=retry_after).timestamp
+    _generate_delaylimited_response.next_allowed = arrow.now().shift(
+        seconds=retry_after / 1000,
+    ).timestamp
     return response
 
 
@@ -150,8 +154,9 @@ def test_webhook_retrydelay(mocker, webhook):  # pylint: disable=W0621
 
     mocker.patch('requests.post', side_effect=_side_effects_gen(
         (
-            (_generate_delaylimited_response, (mocker,), {'retry_after': 3, 'reinitialize': True}),
-            (_generate_delaylimited_response, (mocker,), {'retry_after': 1}),
+            (_generate_delaylimited_response, (mocker,), {'retry_after': 3000,
+                                                          'reinitialize': True}),
+            (_generate_delaylimited_response, (mocker,), {'retry_after': 1000}),
             (_generate_response, (mocker,), {}),
         ),
     ))
@@ -167,7 +172,7 @@ class _ResetViolation(Exception):
     pass
 
 
-def _generate_resetlimited_response(mocker, retry_after=3, reinitialize=False, remaining=1):
+def _generate_resetlimited_response(mocker, retry_after=3000, reinitialize=False, remaining=1):
     """Mocks a requests.Response to raise an error if X-RateLimit-Reset is violated."""
 
     now = arrow.now().timestamp
@@ -179,7 +184,7 @@ def _generate_resetlimited_response(mocker, retry_after=3, reinitialize=False, r
     response = _generate_response(mocker, remaining=remaining)
     response.headers['Retry-After'] = retry_after
 
-    reset_time = arrow.now().shift(seconds=retry_after).timestamp
+    reset_time = arrow.now().shift(seconds=retry_after / 1000).timestamp
     response.headers['X-RateLimit-Reset'] = reset_time
     _generate_resetlimited_response.reset_time = reset_time
     return response
@@ -191,10 +196,14 @@ def test_webhook_buffering(mocker, webhook):  # pylint: disable=W0621
 
     mocker.patch('requests.post', side_effect=_side_effects_gen(
         (
-            (_generate_resetlimited_response, (mocker,), {'retry_after': 3, 'reinitialize': True}),
-            (_generate_resetlimited_response, (mocker,), {'retry_after': 1, 'remaining': 5}),
-            (_generate_resetlimited_response, (mocker,), {'retry_after': 3, 'reinitialize': True}),
-            (_generate_resetlimited_response, (mocker,), {'retry_after': 1, 'remaining': 5}),
+            (_generate_resetlimited_response, (mocker,), {'retry_after': 3000,
+                                                          'reinitialize': True}),
+            (_generate_resetlimited_response, (mocker,), {'retry_after': 1000,
+                                                          'remaining': 5}),
+            (_generate_resetlimited_response, (mocker,), {'retry_after': 3000,
+                                                          'reinitialize': True}),
+            (_generate_resetlimited_response, (mocker,), {'retry_after': 1000,
+                                                          'remaining': 5}),
         ),
     ))
 
