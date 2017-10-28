@@ -54,6 +54,7 @@ class TrelloActivityFeed(object):
                  board_id,
                  muted_action_types=None,
                  muted_update_fields=None,
+                 muted_update_lists=None,
                  last_update=None):
 
         self.api = api
@@ -66,6 +67,10 @@ class TrelloActivityFeed(object):
         if muted_update_fields is None:
             muted_update_fields = set()
         self.muted_update_fields = set(muted_update_fields)
+
+        if muted_update_lists is None:
+            muted_update_lists = set()
+        self.muted_update_lists = set(muted_update_lists)
 
         if last_update is None:
             last_update = arrow.now()
@@ -108,6 +113,9 @@ class TrelloActivityFeed(object):
             if action['type'] == 'updateCard':
                 for field_name in self.muted_update_fields:
                     action['data']['old'].pop(field_name, None)
+                if 'listAfter' in action['data'] \
+                    and action['data']['listAfter']['name'] in self.muted_update_lists:
+                    continue
                 if not any(action['data']['old'].keys()):
                     continue
             yield action

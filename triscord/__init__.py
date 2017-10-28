@@ -70,6 +70,11 @@ def main(config_path, persist_path, debug=False):
                 'muted_update_fields',
                 fallback="",
             )).split(','),
+            muted_update_lists=str(settings.CONFIG.get(
+                'Trello',
+                'muted_update_lists',
+                fallback="",
+            )).split(','),
             last_update=last_update,
         )
         discord_hook = discord.DiscordWebhook(

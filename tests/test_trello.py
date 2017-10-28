@@ -169,6 +169,35 @@ def test_action_update_filter(api_config, api_actions):  # pylint: disable=W0621
                 assert muted_field not in action['data']['old']
 
 
+def test_action_update_listfilter(api_config, api_actions):  # pylint: disable=W0621
+    """Asserts that TrelloActivityFeed properly filters out updateCard instances from blacklisted
+    lists."""
+
+    api = unit.TrelloAPI(
+        key=api_config['key'],
+        token=api_config['token'],
+        base_url=api_config['url'],
+    )
+
+    muted_lists = ["Blacklisted List"]
+    assert list(filter(
+        lambda action: action['type'] == "updateCard" and
+        'listAfter' in action['data'] and
+        action['data']['listAfter']['name'] in muted_lists,
+        api_actions
+    ))
+
+    feed = unit.TrelloActivityFeed(
+        api=api,
+        board_id=api_config['board_id'],
+        muted_update_lists=muted_lists,
+    )
+    for action in feed.actions:
+        if action['type'] == "updateCard":
+            if 'listAfter' in action['data']:
+                assert action['data']['listAfter']['name'] not in muted_lists
+
+
 @pytest.fixture(scope="function", params=_load_from_json('trello_api_actions.json'))
 def api_action(mocker, request):
     """Fixture providing a single Board activity action."""
