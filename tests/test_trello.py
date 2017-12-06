@@ -246,6 +246,12 @@ def test_action_formatting(api_config, api_action):  # pylint: disable=W0621
     )
     for action in feed.actions:
         message = feed.format_action(action)
+        if action['type'] == 'updateCard':
+            # Assert updateCard supressions
+            if 'idLabels' in action['data']['old'] or \
+               'membersList' in action['data']['old']:
+                assert message is None
+                continue
         assert any(message)
 
 

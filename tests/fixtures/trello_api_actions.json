@@ -1,5 +1,54 @@
 [
    {
+      "type" : "updateCard",
+      "data" : {
+         "old" : {
+            "idLabels" : [
+               "58ac7e8fced82109ff64e5ff"
+            ]
+         },
+         "board" : {
+            "id" : "58ac7cf78180d6bd687bed33",
+            "shortLink" : "Dvoh1A9x",
+            "name" : "R&D"
+         },
+         "list" : {
+            "name" : "In progress",
+            "id" : "58ac7df0eeebb7948b24ffa0"
+         },
+         "card" : {
+            "idShort" : 31,
+            "idLabels" : [
+               "58ac7e8fced82109ff64e5ff"
+            ],
+            "name" : "Service Status Page: Automation of incident detection",
+            "shortLink" : "aNPinLDD",
+            "id" : "58a21d365d3041df260a48ea"
+         }
+      },
+      "idMemberCreator" : "561967542947eaf6b03d0947",
+      "date" : "2017-12-04T11:48:54.813Z",
+      "id" : "5a2536269b453c840090f227",
+      "memberCreator" : {
+         "username" : "enricoghidoni",
+         "avatarHash" : null,
+         "initials" : "EG",
+         "id" : "561967542947eaf6b03d0947",
+         "fullName" : "Enrico Ghidoni"
+      },
+      "display" : {
+         "entities" : {
+            "memberCreator" : {
+               "text" : "Enrico Ghidoni",
+               "id" : "561967542947eaf6b03d0947",
+               "type" : "member",
+               "username" : "enricoghidoni"
+            }
+         },
+         "translationKey" : "unknown"
+      }
+   },
+   {
       "data" : {
          "card" : {
             "idShort" : 2,

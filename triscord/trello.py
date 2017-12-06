@@ -194,6 +194,9 @@ def card_update_formatter(action):
     elif updated_field == 'idMembers':
         # Duplicates with addMemberToCard, ignore
         return None
+    elif updated_field == 'idLabels':
+        # Inconsistent data, not always generated. May be related to the api key's owner.
+        return None
     else:
         updated_value = action['data']['card'][updated_field]
         output = output + " updated the card `{display[entities][card][text]}`'s" + \
