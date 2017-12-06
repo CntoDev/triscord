@@ -281,6 +281,33 @@ def test_action_cardjoin(api_config, action):  # pylint: disable=W0621
     'action',
     _filter_action_type(
         _load_from_json('trello_api_action_card_assigned.json'),
+        ['updateCard'],
+    ),
+)
+def test_action_cardjoin_duplicate(api_config, action):  # pylint: disable=W0621
+    """Regression test.
+
+    Asserts that updateCard actions that only update assigned members are ignored.
+    Trello updated their API to add such an action *in addition* to the addMemberToCard.
+    """
+
+    api = unit.TrelloAPI(
+        key=api_config['key'],
+        token=api_config['token'],
+        base_url=api_config['url'],
+    )
+    feed = unit.TrelloActivityFeed(
+        api=api,
+        board_id=api_config['board_id'],
+    )
+    message = feed.format_action(action)
+    assert message is None
+
+
+@pytest.mark.parametrize(
+    'action',
+    _filter_action_type(
+        _load_from_json('trello_api_action_card_assigned.json'),
         ['removeMemberFromCard'],
     ),
 )

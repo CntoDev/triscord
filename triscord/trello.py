@@ -191,6 +191,9 @@ def card_update_formatter(action):
     if updated_field == 'idList':
         output = output + " moved card `{display[entities][card][text]}` " \
             "to list `{data[listAfter][name]}`."
+    elif updated_field == 'idMembers':
+        # Duplicates with addMemberToCard, ignore
+        return None
     else:
         updated_value = action['data']['card'][updated_field]
         output = output + " updated the card `{display[entities][card][text]}`'s" + \
