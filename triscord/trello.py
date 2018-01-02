@@ -114,7 +114,7 @@ class TrelloActivityFeed(object):
                 for field_name in self.muted_update_fields:
                     action['data']['old'].pop(field_name, None)
                 if 'listAfter' in action['data'] \
-                    and action['data']['listAfter']['name'] in self.muted_update_lists:
+                        and action['data']['listAfter']['name'] in self.muted_update_lists:
                     continue
                 if not any(action['data']['old'].keys()):
                     continue

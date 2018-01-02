@@ -10,12 +10,12 @@ class TriscordConfigParser(configparser.ConfigParser):  # pylint: disable=R0901
 
     _loaded = False
 
-    def get(self, *args, **kwargs):
+    def get(self, *args, **kwargs):  # pylint: disable=arguments-differ
         if not self._loaded:
             raise RuntimeError('Settings requested before configuration load.')
         return super().get(*args, **kwargs)
 
-    def _read(self, *args, **kwargs):
+    def _read(self, *args, **kwargs):  # pylint: disable=arguments-differ
         self._loaded = True
         return super()._read(*args, **kwargs)
 
