@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """triscord.trello unit tests."""
-
+import copy
 import json
 import os
 import re
@@ -12,6 +12,7 @@ import pytest
 import requests
 
 from triscord import trello as unit
+from triscord import settings
 
 
 def _load_from_json(file_name):
@@ -365,6 +366,42 @@ def test_actions_ordering(api_config, api_actions):  # pylint: disable=W0621
         if previous_action_date is not None:
             assert action_date > previous_action_date
         previous_action_date = action_date
+
+
+def test_username_aliases(api_config, api_actions):  # pylint: disable=W0621
+    """Asserts Trello usernames are changed with configured aliases"""
+
+    unmodified_actions = copy.deepcopy(api_actions)
+
+    api = unit.TrelloAPI(
+        key=api_config['key'],
+        token=api_config['token'],
+        base_url=api_config['url'],
+    )
+
+    feed = unit.TrelloActivityFeed(
+        api=api,
+        board_id=api_config['board_id'],
+    )
+
+    unmuted_actions = [action for action in unmodified_actions if action['type'] in
+                       unit.TrelloActivityFeed.action_formatters.keys()]
+    unmuted_actions.reverse()
+
+    config_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'fixtures',
+                               'triscord.ini')
+
+    settings.CONFIG.read(config_path)
+    aliases = settings.CONFIG['Aliases']
+
+    for index, action in enumerate(feed.actions):
+        trello_username = unmuted_actions[index]['memberCreator']['username']
+        if trello_username in aliases:
+            assert action['memberCreator']['username'] == aliases[trello_username]
+            assert action['display']['entities']['memberCreator']['username'] == \
+                aliases[trello_username]
+            if 'member' in action:
+                assert action['member']['username'] == aliases[trello_username]
 
 
 #  vim: set tabstop=4 shiftwidth=4 expandtab autoindent :

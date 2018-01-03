@@ -7,6 +7,8 @@ import logging
 import arrow
 import requests
 
+from . import settings
+
 
 class TrelloAPI(object):  # pylint: disable=R0903
     """Provides an abstraction to Trello's Web authentication-restricted API."""
@@ -89,6 +91,16 @@ class TrelloActivityFeed(object):
 
         return decorator
 
+    @staticmethod
+    def replace_username(action, new_username):
+        """Replaces username fields in an action"""
+        action['memberCreator']['username'] = new_username
+        action['display']['entities']['memberCreator']['username'] = new_username
+        if 'member' in action:
+            action['member']['username'] = new_username
+
+        return action
+
     @property
     def actions(self):
         """Generator which yields any action that is eligible to be synchronized."""
@@ -109,7 +121,14 @@ class TrelloActivityFeed(object):
         actions = response.json()
         actions.reverse()
 
+        aliases = {}
+        if 'Aliases' in settings.CONFIG.sections():
+            aliases = settings.CONFIG['Aliases']
+
         for action in actions:
+            trello_username = action['memberCreator']['username']
+            if trello_username in aliases:
+                action = self.replace_username(action, aliases[trello_username])
             if action['type'] == 'updateCard':
                 for field_name in self.muted_update_fields:
                     action['data']['old'].pop(field_name, None)
